@@ -1,1 +1,19 @@
-<p>main works!</p>
+<div class="row text-center mt-4">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <button class="btn btn-primary">
+        Previous
+      </button>
+      <button class="btn btn-primary">
+        Next
+      </button>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | date:'yyyy MMM dd' }}</h3>
+  </div>
+</div>
+
+<div class="mt-5">
+  <app-calendar></app-calendar>
+</div>

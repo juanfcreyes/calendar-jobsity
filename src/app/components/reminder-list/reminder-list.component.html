@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title text-center">Reminders</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="text-danger fa fa-window-close"></i>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container">
+    <div class="row" *ngFor="let remainder of reminders">
+      <div class="reminder" [ngClass]="remainder.color.value" role="alert" >
+        <h2>
+          {{remainder.title}}
+        </h2>
+        <p>
+          {{remainder.city.name }} - {{remainder.city.country }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <button class="btn btn-dan" (click)="activeModal.close('Close clicked')">Close</button>
+</div>
