@@ -1,21 +1,32 @@
 <div class="day">
   <div class="d-flex justify-content-between">
-    <div [ngClass]="[day.color]" class="d-flex justify-content-start">
+    <div [ngClass]="[day.color]" class="d-flex justify-content-start number-day">
       {{ day.numberDay }}
     </div>
-    <div class="d-flex justify-content-end" *ngIf="day.color != 'text-muted' ">
-      <i *ngIf="reminders.length > 0" class="text-info mr-2 fa fa-eye" (click)="showReminderList()"></i>
-      <i class="text-primary fa fa-plus" (click)="showEventForm()"></i>
+    <div class="d-flex justify-content-end mt-1 mr-1" *ngIf="day.color != 'text-muted' ">
+      <i *ngIf="reminders.length > 0" placement="top" ngbPopover="Delete all reminders"
+        class="text-danger mr-2  fa fa-trash" triggers="mouseenter:mouseleave" (click)="deleteAllReminders()"></i>
+
+      <i *ngIf="reminders.length > 0" placement="top" ngbPopover="See all reminders" triggers="mouseenter:mouseleave"
+        class="text-info mr-2 fa fa-eye" (click)="showReminderList()"></i>
+
+      <i class="text-primary fa fa-plus" placement="top" triggers="mouseenter:mouseleave"
+        ngbPopover="Add a new reminder" (click)="showEventForm()"></i>
     </div>
   </div>
 
-  <ul *ngFor="let reminder of remindersToShow">
-    <li [ngClass]="reminder.color.color">
-      <p style="text-overflow:ellipsis ">
-        <i class="text-left text-dark fa fa-trash"></i>
-        <i class="text-left text-dark fa fa-edit"></i>
+  <div class="mt-2"> 
+    <div *ngFor="let reminder of remindersToShow; let i = index;" class="d-flex justify-content-between font-size"
+      [ngClass]="reminder.color.color">
+      <div>
+        <i class="action-reminder text-left text-dark fa fa-trash mr-2" (click)="deleteReminder(i)"></i>
+        <i class="action-reminder text-left text-dark fa fa-edit" (click)="editReminder(reminder)"></i>
+      </div>
+      <div class="reminder text-right pr-2">
         {{ reminder.title }}
-      </p>
-    </li>
-  </ul>
+      </div>
+    </div>
+  </div>
+
+
 </div>

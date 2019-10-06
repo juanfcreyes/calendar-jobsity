@@ -1,8 +1,24 @@
 .day {
     height: 100px;
     margin-left: 15px;
+    font-size: 12px;
+}
+
+.number-day {
+    font-size: 14px;
 }
 
 .reminder {
-    font-size: 8px;
+    text-overflow:ellipsis; 
+    white-space: nowrap; 
+    overflow: hidden;     
+    width: 80px;
+}
+
+.action-reminder {
+    cursor: pointer;
+}
+
+.font-size {
+    font-size: 10px;
 }

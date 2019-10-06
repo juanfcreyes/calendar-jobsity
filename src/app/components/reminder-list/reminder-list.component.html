@@ -1,24 +1,53 @@
-<div class="modal-header">
-  <h4 class="modal-title text-center">Reminders</h4>
-  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-    <i class="text-danger fa fa-window-close"></i>
-  </button>
-</div>
-<div class="modal-body">
-  <div class="container">
-    <div class="row" *ngFor="let remainder of reminders">
-      <div class="reminder" [ngClass]="remainder.color.value" role="alert" >
-        <h2>
-          {{remainder.title}}
-        </h2>
-        <p>
-          {{remainder.city.name }} - {{remainder.city.country }}
-        </p>
-      </div>
+<div class="remainer-list-header">
+  <div class="d-flex justify-content-between">
+    <div></div>
+    <div>
+      <h4 class="modal-title text-center">Reminders</h4>
+    </div>
+    <div>
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+        <i class="text-danger fa fa-window-close"></i>
+      </button>
     </div>
   </div>
 </div>
+<div class="modal-body">
+  <div class="container remainer-list">
+    <div *ngFor="let reminder of reminders; let i = index;">
+      <div class="card mt-4">
+        <div class="card-header" [ngClass]="reminder.color.value">
+          <div class="d-flex justify-content-between">
+            <div>
+              <p>{{reminder.title}}</p>
+            </div>
+            <div>
+              <button class="btn btn-danger mr-2" (click)="deleteReminder(i)">
+                <i class="fa fa-trash "></i>
+              </button>
+              <button class="btn btn-primary" (click)="editReminder(reminder)">
+                <i class="fa fa-edit"></i>
+              </button>
+            </div>
+          </div>
 
-<div class="modal-footer">
-  <button class="btn btn-dan" (click)="activeModal.close('Close clicked')">Close</button>
-</div>
+
+        </div>
+        <div class="card-body row">
+          <div class="col">
+            <p>Time: {{reminder.time.hour }}:{{reminder.time.minute }}</p>
+            <p>City: {{reminder.city.name }}</p>
+            <p>Country: {{reminder.city.country }}</p>
+          </div>
+          <div class="col">
+            <div class="text-center">
+              <img [src]="reminder.weather.icon" class="rounded">
+              <p> {{reminder.weather.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer mt-2">
+    <button class="btn btn-danger" (click)="activeModal.close('Close clicked')">Close</button>
+  </div>

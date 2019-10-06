@@ -1,7 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title">Reminder Form</h4>
   <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-     <i class="text-danger fa fa-window-close"></i>
+    <i class="text-danger fa fa-window-close"></i>
   </button>
 </div>
 <div class="modal-body">
@@ -9,18 +9,14 @@
     <label for="title">Title</label>
     <div class="input-group">
       <input [(ngModel)]="reminder.title" id="title" class="form-control" placeholder="Title" name="title"
-        maxlength="15">
+        maxlength="30">
     </div>
   </div>
   <div class="form-group">
-    <label for="city">City</label>
-    <select class="input-group" name="color" id="city" [(ngModel)]="reminder.city" (change)=searchWeather()>
-      <option *ngFor="let city of cities | async" [ngValue]="city">{{city.name}} - {{ city.country}}</option>
-    </select>
-  </div>
-  <div class="text-center" *ngIf="weather.icon">
-      <img [src]="weather.icon" class="rounded">
-      <p> {{weather.description}}</p>
+    <label for="title">Time</label>
+    <div class="input-group row d-flex justify-content-center">
+      <ngb-timepicker [(ngModel)]="reminder.time"></ngb-timepicker>
+    </div>
   </div>
   <div class="form-group">
     <label for="color">Color</label>
@@ -29,9 +25,19 @@
         {{colorOption.option}}</option>
     </select>
   </div>
+  <div class="form-group">
+    <label for="city">City</label>
+    <select class="input-group" name="color" id="city" [(ngModel)]="reminder.city" (change)=searchWeather()>
+      <option *ngFor="let city of cities | async" [ngValue]="city">{{city.name}} - {{ city.country}}</option>
+    </select>
+  </div>
+  <div class="text-center" *ngIf="weather.icon">
+    <img [src]="weather.icon" class="rounded">
+    <p> {{weather.description}}</p>
+  </div>
 </div>
 
 <div class="modal-footer">
- <button class="btn btn-primary" (click)="save()">Accept</button>
-    <button class="btn btn-dan" (click)="activeModal.close('Close clicked')">Close</button>
+  <button class="btn btn-primary" (click)="save()">Accept</button>
+  <button class="btn btn-dan" (click)="activeModal.dismiss('Close clicked')">Close</button>
 </div>

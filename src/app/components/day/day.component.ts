@@ -1,7 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ReminderModalComponent } from '../reminder-modal/reminder-modal.component';
 import { ReminderListComponent } from '../reminder-list/reminder-list.component';
+import { MessageService } from '../../services/message.service';
+
 
 @Component({
   selector: 'app-day',
@@ -14,7 +16,7 @@ export class DayComponent implements OnInit {
   reminders: Reminder[] = []
   remindersToShow: Reminder[] = []
 
-  constructor(private modalService: NgbModal) { }
+  constructor(private modalService: NgbModal, private messageService: MessageService) { }
 
   ngOnInit() {
   }
@@ -22,19 +24,45 @@ export class DayComponent implements OnInit {
   showEventForm() {
     const modalRef = this.modalService.open(ReminderModalComponent);
     modalRef.result.then((result: Reminder) => {
-      if (result.title) {
-        this.reminders.push(result);
-        this.remindersToShow = this.reminders.slice(0,2)  
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
+      this.reminders.push(result);
+      this.sortReminders();
+    }).catch((console.log));
+  }
+
+  editReminder(reminder: Reminder) {
+    const modalRef = this.modalService.open(ReminderModalComponent);
+    modalRef.componentInstance.reminder = reminder;
+    modalRef.result.then(this.sortReminders).catch(console.log);
+  }
+
+  sortReminders() {
+    this.reminders = this.reminders.sort((a: Reminder, b: Reminder) => a.timeMilliseconds - b.timeMilliseconds);
+    this.remindersToShow = this.reminders.slice(0, 3);
   }
 
   showReminderList() {
-    const modalRef = this.modalService.open(ReminderListComponent);
+    const modalRef = this.modalService.open(ReminderListComponent , {backdrop : 'static', keyboard : false});
     modalRef.componentInstance.reminders = this.reminders;
     modalRef.result.then((console.log)).catch((console.log));
   }
 
+  deleteAllReminders() {
+    this.messageService.showConfirmAlert('Do you want to delete all reminders?')
+      .then((result) => {
+        if (result.value) {
+          this.reminders = [];
+          this.remindersToShow = [];
+        }
+      });
+  }
+
+  deleteReminder(index: number) {
+    this.messageService.showConfirmAlert('Do you want to delete the selected reminder?')
+      .then((result) => {
+        if (result.value) {
+          this.reminders.splice(index, 1);
+          this.sortReminders();
+        }
+      });
+  }
 }

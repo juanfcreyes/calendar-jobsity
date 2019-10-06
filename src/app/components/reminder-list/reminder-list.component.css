@@ -1,3 +1,11 @@
-.reminder {
-    width: 100%;
+.remainer-list {
+   max-height: 350px;
+   overflow-x: hidden;
+   overflow-y: auto;
 }
+
+.remainer-list-header {
+    border-bottom-style: dotted;
+    border-width: 1px;
+}
+

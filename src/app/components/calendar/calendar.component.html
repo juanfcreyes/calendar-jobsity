@@ -1,17 +1,15 @@
-<div>
+<div class="container">
   <table class="table">
-    <thead class="bg-primary text-white">
-      <tr>
-        <th *ngFor="let day of daysOfWeek" scope="col" class="text-center">{{day}}</th>
-      </tr>
-    </thead>
+    <tr class="row bg-primary text-white">
+      <th *ngFor="let day of daysOfWeek" class="text-center col">{{day}}</th>
+    </tr>
     <tbody>
-      <tr *ngFor="let i of [0,1,2,3,4]">
-        <th class="calendar-day" *ngFor="let day of daysOfWeek" [ngClass]="[daysMap[day][i].backgroundColor]">
-         <app-day [day]="daysMap[day][i]"></app-day>
+      <tr *ngFor="let i of [0,1,2,3,4]" class="row">
+        <th class="calendar-day col" scope="col" *ngFor="let day of daysOfWeek"
+          [ngClass]="[daysMap[day][i].backgroundColor]">
+          <app-day [day]="daysMap[day][i]"></app-day>
         </th>
       </tr>
     </tbody>
   </table>
-
 </div>
