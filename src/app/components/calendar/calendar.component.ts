@@ -1,5 +1,12 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { addMonth } from '../../store/actions/calendar.actions';
+import { CalendarState } from '../../store/reducers/calendar.reducer';
+import { AppState } from '../../store/app.metareducer';
+import { setCurrentMonth } from '../../store/actions/month.actions';
+import { MonthState } from '../../store/reducers/month.reducer';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-calendar',
@@ -7,23 +14,43 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.css']
 })
 
-export class CalendarComponent implements OnChanges {
+export class CalendarComponent implements OnInit, OnDestroy {
 
-  @Input() month: string;
-  monthMap: Object = {};
   daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  calendarStateSubscription: Subscription;
+  monthStateSubscription: Subscription;
   numberOfDaysPerMonth: number;
-  numberOfelements = 35;
   days: DayInformation[] = [];
-  
-  constructor() { }
+  numberOfelements = 35;
+  monthMap: Object = {};
+  daysMap: Object;
+  month: string;
 
-  ngOnChanges() {
-    if (!this.monthMap[this.month]) {
+  constructor(private store: Store<AppState>) {}
+
+  ngOnInit() {
+    this.calendarStateSubscription = this.store.select('calendarState').subscribe((store: CalendarState) => {
+      this.month = store.currentMonthName;
+      this.init(store.monthMap);
+      this.store.dispatch(setCurrentMonth({ monthReference: this.month, daysMap: this.monthMap[this.month] }));
+    });
+    this.monthStateSubscription = this.store.select('monthState').subscribe((store: MonthState) => {
+      this.daysMap = store.currentMonth.daysMap;
+    });
+  }
+
+  ngOnDestroy() {
+    this.calendarStateSubscription.unsubscribe();
+    this.monthStateSubscription.unsubscribe();
+  }
+
+  init(monthMap: Object) {
+    if (!monthMap[this.month]) {
       this.monthMap[this.month] = {};
       this.numberOfDaysPerMonth = moment(this.month, 'YYYY-MM').daysInMonth();
       this.days = [];
       this.generateDaysOfMonth();
+      this.store.dispatch(addMonth({ monthReference: this.month, daysMap: this.monthMap[this.month] }));
     }
   }
 
@@ -60,7 +87,7 @@ export class CalendarComponent implements OnChanges {
     return this.genrerateDay(referenceDate, completeTime, color)
   }
 
-  generateDayBefore(firstDayOfMonth, index: number, color: string) : DayInformation {
+  generateDayBefore(firstDayOfMonth, index: number, color: string): DayInformation {
     const referenceDate = moment(firstDayOfMonth).subtract(index, 'day').format('DD-dddd');
     const completeTime = moment(firstDayOfMonth).subtract(index, 'day').format('YYYY-MM-DD');
     return this.genrerateDay(referenceDate, completeTime, color)
@@ -83,7 +110,7 @@ export class CalendarComponent implements OnChanges {
     for (let day of this.days) {
       const daySplit = day.referenceDate.split('-');
       this.changeBackgroundColor(day, daySplit[1]);
-      if(map[daySplit[1]]) {
+      if (map[daySplit[1]]) {
         map[daySplit[1]].push(day);
       } else {
         map[daySplit[1]] = []
@@ -93,9 +120,9 @@ export class CalendarComponent implements OnChanges {
   }
 
   changeBackgroundColor(day: DayInformation, dayOfWeek: string) {
-    if(dayOfWeek === 'Sunday' ||  dayOfWeek === 'Saturday') {
+    if (dayOfWeek === 'Sunday' || dayOfWeek === 'Saturday') {
       day.backgroundColor = 'bg-light';
-      if(day.color !== 'text-muted') {
+      if (day.color !== 'text-muted') {
         day.color = 'text-primary';
       }
     }

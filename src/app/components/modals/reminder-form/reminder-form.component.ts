@@ -1,10 +1,14 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CityService } from '../../../services/city.service';
 import { colorOptions } from '../../../constants/color-options';
 import { WeatherService } from '../../../services/weather.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/app.metareducer';
+import { CityState, cityState } from '../../../store/reducers/city.reducer';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -13,8 +17,9 @@ import * as moment from 'moment';
   styleUrls: ['./reminder-form.component.css']
 })
 
-export class ReminderFormComponent implements OnInit {
+export class ReminderFormComponent implements OnInit, OnDestroy {
 
+  cityStateSubscription: Subscription;
   @Input() reminder: Reminder;
   colors = colorOptions;
   weather: Weather = {};
@@ -22,13 +27,17 @@ export class ReminderFormComponent implements OnInit {
   city: City;
 
   constructor(public activeModal: NgbActiveModal, public cityService: CityService,
-    public weatherService: WeatherService) { }
+    public weatherService: WeatherService, private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.cityService.getCities().subscribe((cities: City[]) => {
-      this.cities = cities;
+    this.cityStateSubscription = this.store.select('cityState').subscribe((store: CityState ) => {
+      this.cities = store.cities;
       this.initDefafultData();
     });
+  }
+
+  ngOnDestroy() {
+    this.cityStateSubscription.unsubscribe();
   }
 
   initDefafultData() {

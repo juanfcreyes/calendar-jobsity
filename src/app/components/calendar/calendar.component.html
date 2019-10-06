@@ -6,10 +6,10 @@
     <tbody>
       <tr *ngFor="let i of [0,1,2,3,4]" class="row">
         <th class="calendar-day col"  *ngFor="let day of daysOfWeek"
-          [ngClass]="[monthMap[month][day][i].backgroundColor]">
-          <app-day [day]="monthMap[month][day][i]"></app-day>
+          [ngClass]="[daysMap[day][i].backgroundColor]">
+          <app-day [day]="daysMap[day][i]"></app-day>
         </th>
       </tr>
     </tbody>
   </table>
-</div>
+</div> 

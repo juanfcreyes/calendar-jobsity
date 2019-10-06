@@ -1,8 +1,10 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http'
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './pages/main/main.component';
@@ -12,6 +14,7 @@ import { ReminderFormComponent } from './components/modals/reminder-form/reminde
 import { ReminderListComponent } from './components/modals/reminder-list/reminder-list.component';
 import { ReminderBodyComponent } from './components/reminder-body/reminder-body.component';
 import { ReminderHeaderComponent } from './components/reminder-header/reminder-header.component';
+import { appReducers } from './store/app.metareducer';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,16 @@ import { ReminderHeaderComponent } from './components/reminder-header/reminder-h
     BrowserModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(appReducers),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      features: {
+        pause: true,
+        persist: true
+      }
+    })
   ],
   entryComponents: [
     ReminderFormComponent,
