@@ -15,7 +15,7 @@
   <div class="container remainer-list">
     <div *ngFor="let reminder of reminders; let i = index;">
       <div class="card mt-4">
-        <div class="card-header" [ngClass]="reminder.color.value">
+        <div class="card-header" [ngClass]="reminder.color.theme">
           <div class="d-flex justify-content-between">
             <div>
               <p>{{reminder.title}}</p>

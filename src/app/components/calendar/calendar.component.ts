@@ -96,7 +96,7 @@ export class CalendarComponent implements OnChanges {
         day.color = 'text-primary';
       }
     }
-    if (moment(day.completeTime) < moment()) {
+    if (moment(day.completeTime) < moment(moment().format('YYYY-MM-DD'))) {
       day.utilizable = false;
     }
   }

@@ -1,7 +1,14 @@
 .day {
     height: 100px;
+}
+
+.day-options {
     margin-left: 15px;
     font-size: 12px;
+}
+
+.day-options-icons {
+   cursor: pointer;
 }
 
 .number-day {

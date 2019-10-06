@@ -1,10 +1,9 @@
 
 interface Reminder {
-    title?: string;
-    description?: string;
-    time?: any;
-    timeMilliseconds?: number;
-    color?: any;
-    city?: any;
-    weather?: any;
-  }
+	weather?: Weather;
+	city?: City;
+	color?: Color;
+	title?: string;
+	time?: any;
+	timeMilliseconds?: number;
+}
