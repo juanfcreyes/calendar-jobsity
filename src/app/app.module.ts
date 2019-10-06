@@ -10,6 +10,8 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { DayComponent } from './components/day/day.component';
 import { ReminderFormComponent } from './components/modals/reminder-form/reminder-form.component';
 import { ReminderListComponent } from './components/modals/reminder-list/reminder-list.component';
+import { ReminderBodyComponent } from './components/reminder-body/reminder-body.component';
+import { ReminderHeaderComponent } from './components/reminder-header/reminder-header.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,8 @@ import { ReminderListComponent } from './components/modals/reminder-list/reminde
     DayComponent,
     ReminderFormComponent,
     ReminderListComponent,
+    ReminderBodyComponent,
+    ReminderHeaderComponent,
   ],
   imports: [
     BrowserModule,

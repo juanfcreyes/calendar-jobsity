@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col d-flex flex-column align-items-center">
+    <p class="mt-3">Time: {{reminder.time.hour }}:{{reminder.time.minute }}</p>
+    <p>City: {{reminder.city.name }}</p>
+    <p>Country: {{reminder.city.country }}</p>
+  </div>
+  <div class="col">
+    <div class="text-center">
+      <img [src]="reminder.weather.icon" class="rounded">
+      <p> {{reminder.weather.description}}</p>
+    </div>
+  </div>
+</div>

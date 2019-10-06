@@ -1,0 +1,15 @@
+<div class="d-flex justify-content-between">
+  <div>
+    <p>{{reminder.title}}</p>
+  </div>
+  <div>
+    <button [ngClass]="{'btn-danger': reminder.color.option != 'danger', 
+           'btn-dark': reminder.color.option == 'danger'}" class="btn mr-2" (click)="deleteReminder()">
+      <i class="fa fa-trash "></i>
+    </button>
+    <button [ngClass]="{'btn-primary': reminder.color.option != 'primary', 
+          'btn-dark': reminder.color.option == 'primary'}" class="btn" (click)="editReminder()">
+      <i class="fa fa-edit"></i>
+    </button>
+  </div>
+</div>
