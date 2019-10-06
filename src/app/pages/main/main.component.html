@@ -1,19 +1,19 @@
 <div class="row text-center mt-4">
   <div class="col-md-4">
     <div class="btn-group">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="decrementMonth()" [disabled]="now == selectedMonth">
         Previous
       </button>
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" (click)="incrementMonth()">
         Next
       </button>
     </div>
   </div>
   <div class="col-md-4">
-    <h3>{{ viewDate | date:'yyyy MMM dd' }}</h3>
+    <h3>{{ selectedMonth }}</h3>
   </div>
 </div>
 
 <div class="mt-5">
-  <app-calendar></app-calendar>
+  <app-calendar [month]="selectedMonth"></app-calendar>
 </div>

@@ -22,7 +22,7 @@ export class DayComponent implements OnInit {
   }
 
   showEventForm() {
-    const modalRef = this.modalService.open(ReminderModalComponent);
+    const modalRef = this.modalService.open(ReminderModalComponent, {backdrop : 'static', keyboard : false});
     modalRef.result.then((result: Reminder) => {
       this.reminders.push(result);
       this.sortReminders();
@@ -30,9 +30,9 @@ export class DayComponent implements OnInit {
   }
 
   editReminder(reminder: Reminder) {
-    const modalRef = this.modalService.open(ReminderModalComponent);
+    const modalRef = this.modalService.open(ReminderModalComponent, {backdrop : 'static', keyboard : false});
     modalRef.componentInstance.reminder = reminder;
-    modalRef.result.then(this.sortReminders).catch(console.log);
+    modalRef.result.then( () => this.sortReminders()).catch(console.log);
   }
 
   sortReminders() {
@@ -41,9 +41,9 @@ export class DayComponent implements OnInit {
   }
 
   showReminderList() {
-    const modalRef = this.modalService.open(ReminderListComponent , {backdrop : 'static', keyboard : false});
+    const modalRef = this.modalService.open(ReminderListComponent, {backdrop : 'static', keyboard : false});
     modalRef.componentInstance.reminders = this.reminders;
-    modalRef.result.then((console.log)).catch((console.log));
+    modalRef.result.then(() => this.sortReminders()).catch(console.log);
   }
 
   deleteAllReminders() {

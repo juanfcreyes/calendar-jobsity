@@ -10,7 +10,7 @@
       <i *ngIf="reminders.length > 0" placement="top" ngbPopover="See all reminders" triggers="mouseenter:mouseleave"
         class="text-info mr-2 fa fa-eye" (click)="showReminderList()"></i>
 
-      <i class="text-primary fa fa-plus" placement="top" triggers="mouseenter:mouseleave"
+      <i *ngIf="day.utilizable" class="text-primary fa fa-plus" placement="top" triggers="mouseenter:mouseleave"
         ngbPopover="Add a new reminder" (click)="showEventForm()"></i>
     </div>
   </div>

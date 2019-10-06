@@ -21,7 +21,7 @@ export class ReminderListComponent implements OnInit {
   }
 
   editReminder(reminder: Reminder) {
-    const modalRef = this.modalService.open(ReminderModalComponent);
+    const modalRef = this.modalService.open(ReminderModalComponent, {backdrop : 'static', keyboard : false});
     modalRef.componentInstance.reminder = reminder;
     modalRef.result.then(() => {
       this.reminders = this.reminders.sort((a: Reminder, b: Reminder) => a.timeMilliseconds - b.timeMilliseconds);
@@ -29,7 +29,6 @@ export class ReminderListComponent implements OnInit {
   }
 
   deleteReminder(index: number) {
-    console.log(index, this.messageService)
     this.messageService.showConfirmAlert('Do you want to delete the selected reminder?')
       .then((result) => {
         if (result.value) {

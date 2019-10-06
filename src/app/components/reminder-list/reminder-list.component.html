@@ -5,7 +5,7 @@
       <h4 class="modal-title text-center">Reminders</h4>
     </div>
     <div>
-      <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <button type="button" class="close" aria-label="Close" (click)="activeModal.close('Cross click')">
         <i class="text-danger fa fa-window-close"></i>
       </button>
     </div>
@@ -21,16 +21,16 @@
               <p>{{reminder.title}}</p>
             </div>
             <div>
-              <button class="btn btn-danger mr-2" (click)="deleteReminder(i)">
+              <button [ngClass]="{'btn-danger': reminder.color.option != 'danger', 
+               'btn-dark': reminder.color.option == 'danger'}" class="btn mr-2" (click)="deleteReminder(i)">
                 <i class="fa fa-trash "></i>
               </button>
-              <button class="btn btn-primary" (click)="editReminder(reminder)">
+              <button [ngClass]="{'btn-primary': reminder.color.option != 'primary', 
+              'btn-dark': reminder.color.option == 'primary'}" class="btn" (click)="editReminder(reminder)">
                 <i class="fa fa-edit"></i>
               </button>
             </div>
           </div>
-
-
         </div>
         <div class="card-body row">
           <div class="col">

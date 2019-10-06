@@ -4,5 +4,6 @@ interface DayInformation {
     referenceDate: string;
     color?: string;
     backgroundColor?: string;
+    utilizable?: boolean;
   }
   
