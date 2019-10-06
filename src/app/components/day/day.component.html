@@ -4,10 +4,10 @@
       {{ day.numberDay }}
     </div>
     <div class="d-flex justify-content-end mt-1 mr-1" *ngIf="day.color != 'text-muted'">
-      <i *ngIf="reminders.length > 0" placement="top" ngbPopover="Delete all reminders"
+      <i *ngIf="day.reminders.length > 0" placement="top" ngbPopover="Delete all reminders"
         class="text-danger mr-2 fa fa-trash day-options-icons" triggers="mouseenter:mouseleave"
         (click)="deleteAllReminders()"></i>
-      <i *ngIf="reminders.length > 0" placement="top" ngbPopover="See all reminders" triggers="mouseenter:mouseleave"
+      <i *ngIf="day.reminders.length > 0" placement="top" ngbPopover="See all reminders" triggers="mouseenter:mouseleave"
         class="text-primary mr-2 fa fa-eye day-options-icons" (click)="showReminderList()"></i>
       <i *ngIf="day.utilizable" ngbPopover="Add a new reminder" placement="top" triggers="mouseenter:mouseleave"
         class="text-primary fa fa-plus day-options-icons" (click)="showEventForm()"></i>

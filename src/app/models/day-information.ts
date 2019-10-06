@@ -5,4 +5,5 @@ interface DayInformation {
 	color?: string;
 	backgroundColor?: string;
 	utilizable?: boolean;
+	reminders?: Reminder[];
 }

@@ -7,23 +7,24 @@ import * as moment from 'moment';
   styleUrls: ['./calendar.component.css']
 })
 
-
 export class CalendarComponent implements OnChanges {
 
   @Input() month: string;
+  monthMap: Object = {};
   daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  numberOfDaysPerMonth: number;
   numberOfelements = 35;
   days: DayInformation[] = [];
-  daysMap = {}
-  numberOfDaysPerMonth: number;
-
+  
   constructor() { }
 
   ngOnChanges() {
-    this.numberOfDaysPerMonth = moment(this.month, 'YYYY-MM').daysInMonth();
-    this.days = [];
-    this.daysMap = {};
-    this.generateDaysOfMonth();
+    if (!this.monthMap[this.month]) {
+      this.monthMap[this.month] = {};
+      this.numberOfDaysPerMonth = moment(this.month, 'YYYY-MM').daysInMonth();
+      this.days = [];
+      this.generateDaysOfMonth();
+    }
   }
 
   generateDaysOfMonth() {
@@ -65,26 +66,28 @@ export class CalendarComponent implements OnChanges {
     return this.genrerateDay(referenceDate, completeTime, color)
   }
 
-  genrerateDay(referenceDate: string, completeTime: any, color: string) {
+  genrerateDay(referenceDate: string, completeTime: any, color: string): DayInformation {
     return {
       completeTime,
       referenceDate,
       numberDay: referenceDate.split('-')[0],
       color,
       backgroundColor: 'white',
-      utilizable: true
+      utilizable: true,
+      reminders: []
     };
   }
 
   generateDaysMap() {
+    const map = this.monthMap[this.month];
     for (let day of this.days) {
       const daySplit = day.referenceDate.split('-');
       this.changeBackgroundColor(day, daySplit[1]);
-      if(this.daysMap[daySplit[1]]) {
-        this.daysMap[daySplit[1]].push(day);
+      if(map[daySplit[1]]) {
+        map[daySplit[1]].push(day);
       } else {
-        this.daysMap[daySplit[1]] = []
-        this.daysMap[daySplit[1]].push(day);
+        map[daySplit[1]] = []
+        map[daySplit[1]].push(day);
       }
     }
   }
