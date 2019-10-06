@@ -1,19 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { CityService } from '../../services/city.service';
-import { colorOptions } from '../../constants/color-options';
-import { WeatherService } from '../../services/weather.service';
+import { CityService } from '../../../services/city.service';
+import { colorOptions } from '../../../constants/color-options';
+import { WeatherService } from '../../../services/weather.service';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 
 
 @Component({
-  selector: 'app-reminder-modal',
-  templateUrl: './reminder-modal.component.html',
-  styleUrls: ['./reminder-modal.component.css']
+  selector: 'app-reminder-form',
+  templateUrl: './reminder-form.component.html',
+  styleUrls: ['./reminder-form.component.css']
 })
 
-export class ReminderModalComponent implements OnInit {
+export class ReminderFormComponent implements OnInit {
 
   @Input() reminder: Reminder;
   colors = colorOptions;
@@ -41,13 +41,16 @@ export class ReminderModalComponent implements OnInit {
     } else {
       this.weather = this.reminder.weather;
       this.city = this.searchCity();
+      this.reminder.color = this.searchColor();
     }
   }
 
   searchCity() : City {
-    return this.cities.find( (cityA) => {
-      return cityA.id === this.reminder.city.id;
-    });
+    return this.cities.find((city) => city.id === this.reminder.city.id);
+  }
+
+  searchColor() : Color {
+    return colorOptions.find((color) => color.option === this.reminder.color.option);
   }
 
   save() {
@@ -59,7 +62,7 @@ export class ReminderModalComponent implements OnInit {
       });
     } else {
       this.reminder.timeMilliseconds = Number(moment.duration(this.reminder.time));
-      this.activeModal.close(this.reminder);
+      this.activeModal.close({ ... this.reminder });
     }
   }
 
@@ -69,7 +72,7 @@ export class ReminderModalComponent implements OnInit {
         const iconURL = 'http://openweathermap.org/img/wn';
         this.weather.icon = `${iconURL}/${data.list[0].weather[0].icon}@2x.png`;
         this.weather.description = data.list[0].weather[0].description;
-        this.reminder.city = this.city;
+        this.reminder.city = { ... this.city };
         this.reminder.weather = this.weather;
       });
   }

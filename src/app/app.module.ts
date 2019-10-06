@@ -8,8 +8,8 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './pages/main/main.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
 import { DayComponent } from './components/day/day.component';
-import { ReminderModalComponent } from './components/reminder-modal/reminder-modal.component';
-import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
+import { ReminderFormComponent } from './components/modals/reminder-form/reminder-form.component';
+import { ReminderListComponent } from './components/modals/reminder-list/reminder-list.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
     MainComponent,
     CalendarComponent,
     DayComponent,
-    ReminderModalComponent,
+    ReminderFormComponent,
     ReminderListComponent,
   ],
   imports: [
@@ -27,7 +27,7 @@ import { ReminderListComponent } from './components/reminder-list/reminder-list.
     HttpClientModule
   ],
   entryComponents: [
-    ReminderModalComponent,
+    ReminderFormComponent,
     ReminderListComponent
   ],
   providers: [],

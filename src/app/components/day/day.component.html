@@ -4,26 +4,22 @@
       {{ day.numberDay }}
     </div>
     <div class="d-flex justify-content-end mt-1 mr-1" *ngIf="day.color != 'text-muted'">
-
       <i *ngIf="reminders.length > 0" placement="top" ngbPopover="Delete all reminders"
         class="text-danger mr-2 fa fa-trash day-options-icons" triggers="mouseenter:mouseleave"
         (click)="deleteAllReminders()"></i>
-
       <i *ngIf="reminders.length > 0" placement="top" ngbPopover="See all reminders" triggers="mouseenter:mouseleave"
         class="text-primary mr-2 fa fa-eye day-options-icons" (click)="showReminderList()"></i>
-
       <i *ngIf="day.utilizable" ngbPopover="Add a new reminder" placement="top" triggers="mouseenter:mouseleave"
         class="text-primary fa fa-plus day-options-icons" (click)="showEventForm()"></i>
     </div>
-    
   </div>
-
-  <div class="mt-2">
-    <div *ngFor="let reminder of remindersToShow; let i = index;" class="d-flex justify-content-between font-size"
+  <div class="mt-2 pr-1 pl-1">
+    <div *ngFor="let reminder of remindersToShow; let i = index;"
+     class="d-flex justify-content-between font-size shadow-sm rounded"
       [ngClass]="reminder.color.theme">
       <div class="ml-2">
         <i class="action-reminder text-left fa fa-trash" (click)="deleteReminder(i)"></i>
-        <i class="action-reminder text-left fa fa-edit ml-1" (click)="editReminder(reminder)"></i>
+        <i class="action-reminder text-left fa fa-edit ml-1" (click)="editReminder(reminder, i)"></i>
       </div>
       <div class="reminder text-right pr-2">
         {{ reminder.title }}

@@ -22,7 +22,7 @@
     <label for="color">Color</label>
     <select class="input-group" name="color" id="color" [(ngModel)]="reminder.color" [ngClass]="reminder.color.theme">
       <option *ngFor="let colorOption of colors" [ngClass]="colorOption.compounedClass" [ngValue]="colorOption">
-        {{colorOption.option}}</option>
+        {{colorOption.option }}</option>
     </select>
   </div>
   <div class="form-group">

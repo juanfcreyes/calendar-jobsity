@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReminderModalComponent } from '../reminder-modal/reminder-modal.component';
-import { ReminderListComponent } from '../reminder-list/reminder-list.component';
+import { ReminderFormComponent } from '../modals/reminder-form/reminder-form.component';
+import { ReminderListComponent } from '../modals/reminder-list/reminder-list.component';
 import { MessageService } from '../../services/message.service';
 
 
@@ -22,17 +22,20 @@ export class DayComponent implements OnInit {
   }
 
   showEventForm() {
-    const modalRef = this.modalService.open(ReminderModalComponent, {backdrop : 'static', keyboard : false});
+    const modalRef = this.modalService.open(ReminderFormComponent, {backdrop : 'static', keyboard : false});
     modalRef.result.then((result: Reminder) => {
       this.reminders.push(result);
       this.sortReminders();
     }).catch((console.log));
   }
 
-  editReminder(reminder: Reminder) {
-    const modalRef = this.modalService.open(ReminderModalComponent, {backdrop : 'static', keyboard : false});
-    modalRef.componentInstance.reminder = reminder;
-    modalRef.result.then( () => this.sortReminders()).catch(console.log);
+  editReminder(reminder: Reminder, index: number) {
+    const modalRef = this.modalService.open(ReminderFormComponent, {backdrop : 'static', keyboard : false});
+    modalRef.componentInstance.reminder = JSON.parse(JSON.stringify(reminder));
+    modalRef.result.then((result: Reminder) => {
+      this.reminders[index] = result;
+      this.sortReminders()
+    }).catch(console.log);
   }
 
   sortReminders() {

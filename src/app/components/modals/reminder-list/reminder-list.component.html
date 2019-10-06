@@ -26,7 +26,7 @@
                 <i class="fa fa-trash "></i>
               </button>
               <button [ngClass]="{'btn-primary': reminder.color.option != 'primary', 
-              'btn-dark': reminder.color.option == 'primary'}" class="btn" (click)="editReminder(reminder)">
+              'btn-dark': reminder.color.option == 'primary'}" class="btn" (click)="editReminder(reminder, i)">
                 <i class="fa fa-edit"></i>
               </button>
             </div>
