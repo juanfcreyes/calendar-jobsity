@@ -1,3 +1,3 @@
 import { createAction, props } from '@ngrx/store';
-export const setCities = createAction('[Calendar Component] setCities', props<{ cities: City[] }>());
+export const setCities = createAction('[City] setCities', props<{ cities: City[] }>());
 

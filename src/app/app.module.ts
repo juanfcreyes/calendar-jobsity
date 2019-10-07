@@ -5,6 +5,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http'
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
 
 import { AppComponent } from './app.component';
 import { MainComponent } from './pages/main/main.component';
@@ -15,6 +16,7 @@ import { ReminderListComponent } from './components/modals/reminder-list/reminde
 import { ReminderBodyComponent } from './components/reminder-body/reminder-body.component';
 import { ReminderHeaderComponent } from './components/reminder-header/reminder-header.component';
 import { appReducers } from './store/app.metareducer';
+import { WeatherEffects } from './store/effects/weather.effects';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,7 @@ import { appReducers } from './store/app.metareducer';
     NgbModule,
     FormsModule,
     HttpClientModule,
+    EffectsModule.forRoot([ WeatherEffects ]),
     StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

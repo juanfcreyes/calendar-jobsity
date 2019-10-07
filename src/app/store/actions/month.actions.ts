@@ -1,4 +1,4 @@
 import { createAction, props } from '@ngrx/store';
 
-export const setCurrentMonth = createAction('[Calendar Component] setCurrentMonth', props<Month>());
-export const setReminderDay = createAction('[Calendar Component] addReminderDay', props<DayInformation>());
+export const setCurrentMonth = createAction('[Month] setCurrentMonth', props<Month>());
+export const setReminderDay = createAction('[Month] addReminderDay', props<DayInformation>());

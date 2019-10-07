@@ -7,8 +7,10 @@ import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/app.metareducer';
-import { CityState, cityState } from '../../../store/reducers/city.reducer';
+import { CityState } from '../../../store/reducers/city.reducer';
 import { Subscription } from 'rxjs';
+import { searchWeather, clearCurrentWeather } from '../../../store/actions/weather.actions';
+import { weatherState, WeatherState } from '../../../store/reducers/weather.reducer';
 
 
 @Component({
@@ -20,6 +22,7 @@ import { Subscription } from 'rxjs';
 export class ReminderFormComponent implements OnInit, OnDestroy {
 
   cityStateSubscription: Subscription;
+  weatherStateSubscription: Subscription;
   @Input() reminder: Reminder;
   colors = colorOptions;
   weather: Weather = {};
@@ -30,14 +33,21 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
     public weatherService: WeatherService, private store: Store<AppState>) { }
 
   ngOnInit() {
-    this.cityStateSubscription = this.store.select('cityState').subscribe((store: CityState ) => {
-      this.cities = store.cities;
-      this.initDefafultData();
-    });
+    this.observeCityState();
+    this.observeWeatherState();
   }
 
   ngOnDestroy() {
     this.cityStateSubscription.unsubscribe();
+    this.weatherStateSubscription.unsubscribe();
+    this.store.dispatch(clearCurrentWeather());
+  }
+
+  observeCityState() {
+    this.cityStateSubscription = this.store.select('cityState').subscribe((store: CityState) => {
+      this.cities = store.cities;
+      this.initDefafultData();
+    });
   }
 
   initDefafultData() {
@@ -54,11 +64,11 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  searchCity() : City {
+  searchCity(): City {
     return this.cities.find((city) => city.id === this.reminder.city.id);
   }
 
-  searchColor() : Color {
+  searchColor(): Color {
     return colorOptions.find((color) => color.option === this.reminder.color.option);
   }
 
@@ -76,14 +86,19 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
   }
 
   searchWeather() {
-    this.weatherService.getWeatherInformation(this.city.id)
-      .subscribe((data: any) => {
+    this.store.dispatch(searchWeather({ cityId: this.city.id }));
+  }
+
+  observeWeatherState() {
+    this.weatherStateSubscription = this.store.select('weatherState').subscribe((store: WeatherState) => {
+      if (store.currentWeather.list) {
         const iconURL = 'http://openweathermap.org/img/wn';
-        this.weather.icon = `${iconURL}/${data.list[0].weather[0].icon}@2x.png`;
-        this.weather.description = data.list[0].weather[0].description;
+        this.weather.icon = `${iconURL}/${store.currentWeather.list[0].weather[0].icon}@2x.png`;
+        this.weather.description = store.currentWeather.list[0].weather[0].description;
         this.reminder.city = { ... this.city };
         this.reminder.weather = this.weather;
-      });
+      }
+    });
   }
 }
 
