@@ -1986,7 +1986,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
           this.weatherStateSubscription = this.store.select('weatherState').subscribe(function (store) {
             if (store.currentWeather.list) {
-              var iconURL = 'http://openweathermap.org/img/wn';
+              var iconURL = 'https://openweathermap.org/img/wn';
               _this11.weather.icon = "".concat(iconURL, "/").concat(store.currentWeather.list[0].weather[0].icon, "@2x.png");
               _this11.weather.description = store.currentWeather.list[0].weather[0].description;
               _this11.reminder.weather = _this11.weather;

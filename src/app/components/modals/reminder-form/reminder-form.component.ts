@@ -93,7 +93,7 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
   observeWeatherState() {
     this.weatherStateSubscription = this.store.select('weatherState').subscribe((store: WeatherState) => {
       if (store.currentWeather.list) {
-        const iconURL = 'http://openweathermap.org/img/wn';
+        const iconURL = 'https://openweathermap.org/img/wn';
         this.weather.icon = `${iconURL}/${store.currentWeather.list[0].weather[0].icon}@2x.png`;
         this.weather.description = store.currentWeather.list[0].weather[0].description;
         this.reminder.weather = this.weather;
