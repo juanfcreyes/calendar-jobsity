@@ -10,7 +10,7 @@ export class CityService {
   constructor(private http: HttpClient) { }
 
   getCities() {
-    return this.http.get('/assets/data/city.list.min.json');
+    return this.http.get('assets/data/city.list.min.json');
   }
 
 }
