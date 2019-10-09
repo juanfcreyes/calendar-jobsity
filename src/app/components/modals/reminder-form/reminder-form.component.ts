@@ -87,6 +87,7 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
 
   searchWeather() {
     this.store.dispatch(searchWeather({ cityId: this.city.id }));
+    this.reminder.city = { ... this.city };
   }
 
   observeWeatherState() {
@@ -95,7 +96,6 @@ export class ReminderFormComponent implements OnInit, OnDestroy {
         const iconURL = 'http://openweathermap.org/img/wn';
         this.weather.icon = `${iconURL}/${store.currentWeather.list[0].weather[0].icon}@2x.png`;
         this.weather.description = store.currentWeather.list[0].weather[0].description;
-        this.reminder.city = { ... this.city };
         this.reminder.weather = this.weather;
       }
     });

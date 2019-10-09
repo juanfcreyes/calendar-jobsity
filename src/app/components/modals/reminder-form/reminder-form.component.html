@@ -31,7 +31,7 @@
       <option *ngFor="let city of cities" [ngValue]="city" >{{city.name}} - {{ city.country}}</option>
     </select>
   </div>
-  <div class="text-center" *ngIf="weather.icon">
+  <div class="text-center" *ngIf="weather && weather.icon">
     <img [src]="weather.icon" class="rounded">
     <p> {{weather.description}}</p>
   </div>

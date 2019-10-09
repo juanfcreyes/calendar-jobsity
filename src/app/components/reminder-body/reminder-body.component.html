@@ -5,7 +5,7 @@
     <p>Country: {{reminder.city.country }}</p>
   </div>
   <div class="col">
-    <div class="text-center">
+    <div class="text-center" *ngIf="reminder.weather">
       <img [src]="reminder.weather.icon" class="rounded">
       <p> {{reminder.weather.description}}</p>
     </div>
